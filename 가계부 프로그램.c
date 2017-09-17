@@ -64,6 +64,7 @@ void initialmenu(USER *u_head, USER *u_tail, GROUP *g_head, GROUP *g_tail, INFO 
 void login(USER *u_head, USER *u_tail, GROUP *g_head, GROUP *g_tail, INFO *i_head, INFO *i_tail, AUTO *a_head, AUTO *a_tail);
 void joinUser(USER *u_head, USER *u_tail, GROUP *g_head, GROUP *g_tail, INFO *i_head, INFO *i_tail, AUTO *a_head, AUTO *a_tail);
 void findID(USER *u_head, USER *u_tail, GROUP *g_head, GROUP *g_tail, INFO *i_head, INFO *i_tail, AUTO *a_head, AUTO *a_tail);
+void findPassword(USER *u_head, USER *u_tail, GROUP *g_head, GROUP *g_tail, INFO *i_head, INFO *i_tail, AUTO *a_head, AUTO *a_tail);
 
 int main()
 {
@@ -343,7 +344,7 @@ void initialmenu(USER *u_head, USER *u_tail, GROUP *g_head, GROUP *g_tail, INFO 
 			findID(u_head, u_tail, g_head, g_tail, i_head, i_tail, a_head, a_tail);
 			break;
 		case 4:
-			//비밀번호 찾기
+			findPassword(u_head, u_tail, g_head, g_tail, i_head, i_tail, a_head, a_tail);
 			break;
 		case 5:
 			save(u_head, u_tail, g_head, g_tail, i_head, i_tail, a_head, a_tail);
@@ -454,7 +455,7 @@ void joinUser(USER *u_head, USER *u_tail, GROUP *g_head, GROUP *g_tail, INFO *i_
 	printf("\n  회 원 가 입 이  완 료 되 었 습 니 다.");
 	getch();
 	
-	initialmenu(u_head, u_tail, g_head, g_tail, i_head, i_tail, a_head, a_tail);
+	initialmenu(u_head, u_tail, g_head, g_tail, i_head, i_tail, a_head, a_tail); //다시 초기화면으로 
 }
 
 void findID(USER *u_head, USER *u_tail, GROUP *g_head, GROUP *g_tail, INFO *i_head, INFO *i_tail, AUTO *a_head, AUTO *a_tail)
@@ -468,7 +469,7 @@ void findID(USER *u_head, USER *u_tail, GROUP *g_head, GROUP *g_tail, INFO *i_he
 	printf("\t    [ I D  찾 기 ]\n");
 	printf("========================================\n\n");
 	printf(" \t이 름 : ");
-	scanf("%s", name); 
+	scanf("%s", name);
 	printf("\n\t전 화 번 호 (숫 자 만  입 력)\n");
 	printf("\n\t");
 	scanf("%s", phone);
@@ -488,10 +489,55 @@ void findID(USER *u_head, USER *u_tail, GROUP *g_head, GROUP *g_tail, INFO *i_he
 	
 	if(flag == 0)
 	{
-		printf("존 재 하 는  아 이 디 가  없 습 니 다.\n");
+		printf("   존 재 하 는  아 이 디 가  없 습 니 다.\n");
 	}
 	
 	getch();
 	
-	initialmenu(u_head, u_tail, g_head, g_tail, i_head, i_tail, a_head, a_tail);
+	initialmenu(u_head, u_tail, g_head, g_tail, i_head, i_tail, a_head, a_tail); //다시 초기화면으로 
+}
+
+void findPassword(USER *u_head, USER *u_tail, GROUP *g_head, GROUP *g_tail, INFO *i_head, INFO *i_tail, AUTO *a_head, AUTO *a_tail)
+{
+	char name[20], id[20], phone[15], newpassword[30];
+	int flag = 0;
+	
+	USER *tmp;
+	
+	system("cls");
+	printf("========================================\n");
+	printf("\t[ 비 밀 번 호   찾 기 ]\n");
+	printf("========================================\n\n");
+	printf(" \t이 름 : ");
+	scanf("%s", name);
+	printf("\n \tID : ");
+	scanf("%s", id); 
+	printf("\n\t전 화 번 호 (숫 자 만  입 력)\n");
+	printf("\n\t");
+	scanf("%s", phone);
+	printf("\n");
+	printf("========================================\n\n");
+	
+	for(tmp = u_head->next; tmp->next != NULL; tmp = tmp->next)
+	{
+		if(strcmp(tmp->name, name) == 0 && strcmp(tmp->id, id) == 0 && strcmp(tmp->phone, phone) == 0)
+		{
+			printf("새 로 운 비 밀 번 호 를  입 력 해 주 세 요.\n");
+			printf("\n\t>> ");
+			scanf("%s", tmp->password);
+			
+			printf("\n 정 상 적 으 로  변 경 되 었 습 니 다.\n");
+			flag = 1;
+			break;
+		}
+	}
+	
+	if(flag == 0)
+	{
+		printf("   존 재 하 지 않 는  정 보 입 니 다.\n");
+	}
+	
+	getch();
+	
+	initialmenu(u_head, u_tail, g_head, g_tail, i_head, i_tail, a_head, a_tail); //다시 초기화면으로 
 }
