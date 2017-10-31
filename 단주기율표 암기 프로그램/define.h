@@ -50,4 +50,4 @@ void print_info(int login_user);
 void change_name(int login_user);
 void change_password(int login_user);
 void change_phone(int login_user);
-//void del_mem(int login_user);
+void del_mem(int login_user);

@@ -40,7 +40,7 @@ void print_info(int login_user)
 				change_phone(login_user);
 				continue;
 			case DEL_MEMBER:
-				//del_mem(login_user);
+				del_mem(login_user);
 				continue;
 			case PREVIOUS_SCREEN:
 				return;
@@ -56,56 +56,104 @@ void print_info(int login_user)
 
 void change_name(int login_user)
 {
-	system("cls");
-	printf("\n\t       이 름 변 경\n\n");
-	printf("==========================================\n\n");
-	printf("  새 로 운  이 름 을  입 력 해 주 세 요\n\n\t>> ");
-	scanf("%s", member_data[login_user].name);
-	printf("\n==========================================\n\n");
-	printf("  %s (으) 로  이 름 이  변 경 되 었 습 니 다 !", member_data[login_user].name); 
-	getch();
+	char new_name[10];
+	
+	while(1)
+	{
+		system("cls");
+		printf("\n\t       이 름 변 경\n\n");
+		printf("==========================================\n\n");
+		printf("\t현 재  이 름 : %s\n\n", member_data[login_user].name);
+		printf(" 새 로 운  이 름 을  입 력 해 주 세 요\n\n\t\t\t( 취 소 : - 1)\n\n\t>> ");
+		scanf("%s", new_name);
+		
+		if(!strcmp(member_data[login_user].name, new_name))
+		{
+			printf("\n\n\t똑 같 은  이 름 입 니 다.\n\n\t다 시  입 력 해 주 세 요.");
+			getch();
+			
+			continue; 
+		}
+		
+		strcpy(member_data[login_user].name, new_name);
+		printf("\n==========================================\n\n");
+		printf("  %s (으) 로  이 름 이  변 경 되 었 습 니 다 !", member_data[login_user].name); 
+		getch();
+		break;
+	}
 }
 
 void change_password(int login_user)
 {
-	system("cls");
-	printf("\n\t    비 밀 번 호  변 경\n\n");
-	printf("==========================================\n\n");
-	printf(" 새 로 운  비 밀 번 호 를  입 력 해 주 세 요\n\n\t>> ");
-	asterisk(member_data[login_user].password);
-	printf("\n==========================================\n\n");
-	printf("  성 공 적 으 로  변 경 되 었 습 니 다 !");
-	getch();
+	char new_password[40];
+	
+	while(1)
+	{
+		system("cls");
+		printf("\n\t    비 밀 번 호  변 경\n\n");
+		printf("==========================================\n\n");
+		printf(" 새 로 운  비 밀 번 호 를  입 력 해 주 세 요\n\n\t\t\t( 취 소 : - 1)\n\n\t>> ");
+		asterisk(new_password);
+		
+		if(!strcmp(member_data[login_user].password, new_password))
+		{
+			printf("\n\n\t똑 같 은  비 밀 번 호 입 니 다.\n\n\t다 시  입 력 해 주 세 요.");
+			getch();
+			
+			continue; 
+		}
+		
+		strcpy(member_data[login_user].password, new_password);
+		printf("\n==========================================\n\n");
+		printf("  성 공 적 으 로  변 경 되 었 습 니 다 !");
+		getch();
+		break;
+	}
 }
 
 void change_phone(int login_user)
 {
-	system("cls");
-	printf("\n\t    전 화 번 호  변 경\n\n");
-	printf("==========================================\n\n");
-	printf(" 새 로 운  전 화 번 호 를  입 력 해 주 세 요\n\n\t( 숫 자 만  입 력 해 주 세 요 )\n\n\t>> ");
-	scanf("%s", member_data[login_user].phone);
+	char new_phone[13];
 	
-	while(check_phone(member_data[login_user].phone) == 1) // 전화번호 예외처리 
+	while(1)
 	{
-		printf("\n\t숫 자 만  입 력 해 주 세 요"); 
-		getch();
 		system("cls");
 		printf("\n\t    전 화 번 호  변 경\n\n");
 		printf("==========================================\n\n");
-		printf(" 새 로 운  전 화 번 호 를  입 력 해 주 세 요\n\n\t( 숫 자 만  입 력 해 주 세 요 )\n\n\t>> ");
-		scanf("%s", member_data[login_user].phone);
+		printf(" 현 재  전 화 번 호 : %s\n\n", member_data[login_user].phone); 
+		printf(" 새 로 운  전 화 번 호 를  입 력 해 주 세 요\n\n\t( 숫 자 만  입 력 해 주 세 요 )\n\n\t\t( 취 소 : - 1)\n\n\t>> ");
+		scanf("%s", new_phone);
+		
+		while(check_phone(member_data[login_user].phone) == 1) // 전화번호 예외처리 
+		{
+			printf("\n\t숫 자 만  입 력 해 주 세 요"); 
+			getch();
+			system("cls");
+			printf("\n\t    전 화 번 호  변 경\n\n");
+			printf("==========================================\n\n");
+			printf(" 새 로 운  전 화 번 호 를  입 력 해 주 세 요\n\n\t( 숫 자 만  입 력 해 주 세 요 )\n\n\t>> ");
+			scanf("%s", new_phone);
+		}
+		
+		if(!strcmp(member_data[login_user].phone, new_phone))
+		{
+			printf("\n\n\t똑 같 은  전 화 번 호 입 니 다.\n\n\t다 시  입 력 해 주 세 요.");
+			getch();
+			
+			continue; 
+		}
+		
+		printf("\n==========================================\n\n");
+		printf("  성 공 적 으 로  변 경 되 었 습 니 다 !");
+		getch();
+		break;
 	}
-	
-	printf("\n==========================================\n\n");
-	printf("  성 공 적 으 로  변 경 되 었 습 니 다 !");
-	getch();
 }
-/*
+
 void del_mem(int login_user)
 {
 	char respones[5];
-	int i;
+	int i, j, t, flag = 1;
 	
 	system("cls");
 	printf("\n\t       회 원 탈 퇴\n\n");
@@ -115,18 +163,28 @@ void del_mem(int login_user)
 	
 	if(!strcmp(respones, "YES") || !strcmp(respones, "Yes") || !strcmp(respones, "Y") || !strcmp(respones, "y"))
 	{
-		for(i = 1; i <= result_count; i++) // 테스트 결과 데이터에서 해당 아이디 데이터 삭제 
+		while(flag == 1)
 		{
-			if(!strcmp(result_data[i].id, member_data[login_user].id))
+			flag = 0; // 해당 아이디의 데이터가 존재하는지에 대한 변수 초기화 
+
+			for(i = 1; i <= result_count; i++)
 			{
-				result_data[i].type = result_data[i + 1].type;
-				strcpy(result_data[i].id, result_data[i + 1].id);
-				result_data[i].yyyy = result_data[i + 1].yyyy;
-				result_data[i].mm = result_data[i + 1].mm;
-				result_data[i].dd = result_data[i + 1].dd;
-				result_data[i].correct = result_data[i + 1].correct;
-				
-				result_count--; // 결과 카운트 변수 1 감소 
+				if(!strcmp(result_data[i].id, member_data[login_user].id)) // 로그인한 아이디의 기록이 있는지 확인 
+				{
+					for(j = i + 1; j <= result_count; j++) // 현재 인덱스 + 1 부터 마지막까지의 데이터 한 칸 전으로 미루기 
+					{
+						strcpy(result_data[j - 1].id, result_data[j].id);
+						result_data[j - 1].type = result_data[j].type;
+						result_data[j - 1].yyyy = result_data[j].yyyy;
+						result_data[j - 1].mm = result_data[j].mm;
+						result_data[j - 1].dd = result_data[j].dd;
+						result_data[j - 1].correct = result_data[j].correct;
+					}
+					
+					result_count--; // 결과 데이터 카운트 변수 1 감소 
+					flag = 1; // 해당 아이디의 데이터가 존재함을 표시 
+					break; // 배열에 아이디가 있는지 처음부터 검사 (데이터를 하나 전으로 미뤘기 때문) 
+				}
 			}
 		}
 
@@ -136,9 +194,8 @@ void del_mem(int login_user)
 			strcpy(member_data[i].password, member_data[i + 1].password);
 			strcpy(member_data[i].name, member_data[i + 1].name);
 			strcpy(member_data[i].phone, member_data[i + 1].phone);
-			
-			mem_count--; // 멤버 카운트 변수 1 감소 
 		}
+		mem_count--; // 멤버 카운트 변수 1 감소 
 		printf("\n==========================================\n\n");
 		printf("  회 원 탈 퇴 가  완 료 되 었 습 니 다\n");
 		getch();
@@ -149,4 +206,4 @@ void del_mem(int login_user)
 		printf("  회 원 탈 퇴 가  취 소 되 었 습 니 다 !\n");
 		getch();
 	}
-}*/
+}
